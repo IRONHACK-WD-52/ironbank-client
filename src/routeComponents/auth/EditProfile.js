@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 import api from "../../apis/api";
 
 import ProfileForm from "./ProfileForm";
 
-function Signup(props) {
+function EditProfile(props) {
   const [state, setState] = useState({
     name: "",
     password: "",
@@ -22,6 +22,32 @@ function Signup(props) {
     document: "",
   });
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const response = await api.get("/profile");
+
+        const addressObj = { ...response.data.address };
+        delete response.data.address;
+        delete addressObj._id;
+
+        const date = new Date(response.data.birthDate);
+
+        setState({
+          ...response.data,
+          ...addressObj,
+          stateOrProvince: addressObj.state,
+          birthDate: `${date.getFullYear()}-${String(
+            date.getMonth() + 1
+          ).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")}`,
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchProfile();
+  }, []);
 
   function handleChange(event) {
     setState({
@@ -43,7 +69,7 @@ function Signup(props) {
         number,
       } = state;
 
-      const response = await api.post("/signup", {
+      const response = await api.put("/profile", {
         ...state,
         address: {
           street,
@@ -55,7 +81,7 @@ function Signup(props) {
         },
       });
       setError(null);
-      props.history.push("/auth/login");
+      props.history.push("/profile");
     } catch (err) {
       console.error(err.response);
       setError(err.response.data.error);
@@ -64,7 +90,7 @@ function Signup(props) {
 
   return (
     <div>
-      <h1>Cadastre-se</h1>
+      <h1>Editar Perfil</h1>
       <ProfileForm
         state={state}
         handleChange={handleChange}
@@ -76,4 +102,4 @@ function Signup(props) {
   );
 }
 
-export default Signup;
+export default EditProfile;
