@@ -63,7 +63,7 @@ function Signup(props) {
   }
 
   return (
-    <div>
+    <div className="container mt-5">
       <h1>Cadastre-se</h1>
       <ProfileForm
         state={state}

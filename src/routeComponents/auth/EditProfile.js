@@ -89,7 +89,7 @@ function EditProfile(props) {
   }
 
   return (
-    <div>
+    <div className="container mt-5">
       <h1>Editar Perfil</h1>
       <ProfileForm
         state={state}

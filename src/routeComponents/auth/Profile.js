@@ -22,12 +22,20 @@ function Profile() {
     document: "",
   });
 
+  const [accounts, setAccounts] = useState([]);
+
   useEffect(() => {
     async function fetchProfile() {
       try {
         const response = await api.get("/profile");
 
         setState({ ...response.data });
+
+        const accountsResponse = await api.get("/account");
+
+        if (accountsResponse.data.length) {
+          setAccounts([...accountsResponse.data]);
+        }
       } catch (err) {
         console.error(err);
       }
@@ -46,7 +54,7 @@ function Profile() {
   }
 
   return (
-    <div>
+    <div className="container mt-5">
       <Link className="btn btn-primary" to="/profile/edit">
         Editar Perfil
       </Link>
@@ -121,9 +129,39 @@ function Profile() {
         {state.document}
       </p>
 
-      <Link className="btn btn-lg btn-primary" to="/account/create">
-        Abra sua conta
-      </Link>
+      <div className="py-4">
+        <h3>Suas contas</h3>
+
+        {accounts.length ? (
+          accounts.map((account) => {
+            return (
+              <div
+                key={account._id}
+                className="rounded shadow w-50 my-4 p-3 text-center "
+              >
+                <Link
+                  className="text-decoration-none"
+                  to={`/account/${account._id}`}
+                >
+                  <p>
+                    <strong>Agência: </strong>
+                    {account.agency}
+                  </p>
+
+                  <p>
+                    <strong>{account.type} Nº: </strong>
+                    {String(account.accountNumber).padStart(7, "0")}
+                  </p>
+                </Link>
+              </div>
+            );
+          })
+        ) : (
+          <Link className="btn btn-lg btn-primary" to="/account/create">
+            Abra sua conta
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

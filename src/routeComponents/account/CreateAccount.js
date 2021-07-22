@@ -28,19 +28,21 @@ function CreateAccount() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Escolha seu tipo de conta:</h2>
+    <div className="container mt-5">
+      <form onSubmit={handleSubmit}>
+        <h2>Escolha seu tipo de conta:</h2>
 
-      <SelectInput
-        value={type}
-        onChange={handleChange}
-        items={["Conta Corrente", "Conta Poupança"]}
-      />
+        <SelectInput
+          value={type}
+          onChange={handleChange}
+          items={["Conta Corrente", "Conta Poupança"]}
+        />
 
-      <button type="submit" className="btn btn-primary">
-        Prosseguir
-      </button>
-    </form>
+        <button type="submit" className="btn btn-primary">
+          Prosseguir
+        </button>
+      </form>
+    </div>
   );
 }
 

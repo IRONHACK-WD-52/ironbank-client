@@ -12,6 +12,9 @@ import ProtectedRoute from "../routeComponents/auth/PrivateRoute";
 
 import CreateAccount from "../routeComponents/account/CreateAccount";
 import AccountDetails from "../routeComponents/account/AccountDetails";
+import DeleteAccount from "../routeComponents/account/DeleteAccount";
+import CreateCard from "../routeComponents/account/CreateCard";
+import CardDetails from "../routeComponents/account/CardDetails";
 
 import CreateTransaction from "../routeComponents/transaction/CreateTransaction";
 import AllTransactions from "../routeComponents/transaction/AllTransactions";
@@ -40,6 +43,21 @@ function App() {
             exact
             path="/:accountId/transaction"
             component={AllTransactions}
+          />
+          <ProtectedRoute
+            exact
+            path="/account/:id/delete"
+            component={DeleteAccount}
+          />
+          <ProtectedRoute
+            exact
+            path="/:accountId/card/create"
+            component={CreateCard}
+          />
+          <ProtectedRoute
+            exact
+            path="/:accountId/card"
+            component={CardDetails}
           />
         </Switch>
       </AuthContextComponent>

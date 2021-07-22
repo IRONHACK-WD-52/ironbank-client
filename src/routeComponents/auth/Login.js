@@ -40,39 +40,41 @@ function Login(props) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Login</h1>
+    <div className="container mt-5">
+      <form onSubmit={handleSubmit}>
+        <h1>Login</h1>
 
-      <TextInput
-        label="E-mail"
-        type="email"
-        name="email"
-        id="signupFormEmail"
-        value={state.email}
-        onChange={handleChange}
-      />
+        <TextInput
+          label="E-mail"
+          type="email"
+          name="email"
+          id="signupFormEmail"
+          value={state.email}
+          onChange={handleChange}
+        />
 
-      <TextInput
-        label="Senha"
-        type="password"
-        name="password"
-        id="signupFormPassword"
-        value={state.password}
-        onChange={handleChange}
-      />
+        <TextInput
+          label="Senha"
+          type="password"
+          name="password"
+          id="signupFormPassword"
+          value={state.password}
+          onChange={handleChange}
+        />
 
-      {error ? <div className="alert alert-danger">{error}</div> : null}
+        {error ? <div className="alert alert-danger">{error}</div> : null}
 
-      <div className="form-group">
-        <button className="btn btn-primary" type="submit">
-          Entrar
-        </button>
-      </div>
+        <div className="form-group">
+          <button className="btn btn-primary" type="submit">
+            Entrar
+          </button>
+        </div>
 
-      <Link className="pb-3" to="/auth/signup">
-        Ainda não é cadastrado? Clique aqui para se cadastrar!
-      </Link>
-    </form>
+        <Link className="pb-3" to="/auth/signup">
+          Ainda não é cadastrado? Clique aqui para se cadastrar!
+        </Link>
+      </form>
+    </div>
   );
 }
 
