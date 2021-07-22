@@ -9,6 +9,7 @@ function Signup(props) {
     name: "",
     password: "",
     email: "",
+    profilePicture: "",
     street: "",
     neighbourhood: "",
     city: "",
@@ -24,10 +25,27 @@ function Signup(props) {
   const [error, setError] = useState(null);
 
   function handleChange(event) {
+    if (event.target.files) {
+      return setState({
+        ...state,
+        [event.currentTarget.name]: event.currentTarget.files[0],
+      });
+    }
+
     setState({
       ...state,
       [event.currentTarget.name]: event.currentTarget.value,
     });
+  }
+
+  async function handleFileUpload(file) {
+    const uploadData = new FormData();
+
+    uploadData.append("profilePicture", file);
+
+    const response = await api.post("/upload", uploadData);
+
+    return response.data.url;
   }
 
   async function handleSubmit(event) {
@@ -43,6 +61,8 @@ function Signup(props) {
         number,
       } = state;
 
+      const profilePictureUrl = await handleFileUpload(state.profilePicture);
+
       const response = await api.post("/signup", {
         ...state,
         address: {
@@ -53,6 +73,7 @@ function Signup(props) {
           postalCode,
           number,
         },
+        profilePictureUrl,
       });
       setError(null);
       props.history.push("/auth/login");
@@ -61,6 +82,8 @@ function Signup(props) {
       setError(err.response.data.error);
     }
   }
+
+  console.log(state);
 
   return (
     <div className="container mt-5">

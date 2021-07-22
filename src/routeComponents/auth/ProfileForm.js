@@ -26,7 +26,7 @@ function ProfileForm(props) {
 
         {props.location.pathname === "/auth/signup" ? (
           <TextInput
-            label="Password"
+            label="Senha"
             type="password"
             name="password"
             id="signupFormPassword"
@@ -34,6 +34,14 @@ function ProfileForm(props) {
             onChange={props.handleChange}
           />
         ) : null}
+
+        <TextInput
+          label="Foto de perfil"
+          type="file"
+          name="profilePicture"
+          id="signupFormProfilePicture"
+          onChange={props.handleChange}
+        />
       </fieldset>
 
       <fieldset className="form-group">
